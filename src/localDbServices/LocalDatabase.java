@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import models.CvOwner;
 
 public class LocalDatabase implements DatabaseObserver {
+
     private static ArrayList<CvOwner> cvOwners;
     private static LocalDatabase instance;
     private static final CvOwnerDao dbHelper = new CvOwnerDaoImpl();
-
 
     private LocalDatabase() {
     }
@@ -29,6 +29,7 @@ public class LocalDatabase implements DatabaseObserver {
         return instance;
 
     }
+
     @Override
     public void update(CvOwner person, int operation) {
         switch (operation) {
@@ -40,6 +41,14 @@ public class LocalDatabase implements DatabaseObserver {
                 break;
             case 3:
                 cvOwners.removeAll(cvOwners);
+            case 4:
+                for (int i = 0; i < cvOwners.size(); i++) {
+                    if (person.getId() == cvOwners.get(i).getId()) {
+                        cvOwners.set(i, person);
+                    }
+                }
+                break;
+
         }
     }
 

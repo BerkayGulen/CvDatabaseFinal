@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="JarFiles">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/JarFiles/sqlite-jdbc-3.40.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/JarFiles/pdfbox-3.0.0-RC1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/JarFiles/TimingFramework-0.55.jar!/" />
+      <root url="jar://$PROJECT_DIR$/JarFiles/miglayout-4.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/JarFiles/table-custom.jar!/" />
+      <root url="jar://$PROJECT_DIR$/JarFiles/commons-io-2.11.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

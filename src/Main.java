@@ -59,7 +59,7 @@ public class Main {
             person.display();
         }
 
-        dbHelper.deleteAll();
+        //dbHelper.deleteAll();
         System.out.println("********************************************");
         System.out.println("After remove all");
         System.out.println("********************************************");
@@ -71,11 +71,12 @@ public class Main {
         System.out.println("********************************************");
         System.out.println("Add again");
         System.out.println("********************************************");
-        dbHelper.add(cvOwner);
+        //dbHelper.add(cvOwner);
 
         for (CvOwner person : localCvOwners) {
             person.display();
         }
+        dbHelper.deleteAll();
 
 //
 //        cvOwner.display();

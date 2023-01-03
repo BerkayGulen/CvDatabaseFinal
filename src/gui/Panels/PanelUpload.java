@@ -30,13 +30,14 @@ public class PanelUpload extends javax.swing.JFrame {
     private PanelHome pnlHome;
     private File cv;
     private CvOwner cvOwner = new CvOwner();
+    private PanelInfo pnlInfo;
 
     /**
      * Creates new form PanelHome
      */
     public PanelUpload(LocationModel locationModel) {
         initComponents();
-        setSize(1200, 800);
+        setSize(1200, 850);
         pnlNavBar.setSize(150, 700);
         setLocation(locationModel.getLocation());
         setSize(locationModel.getDimension());
@@ -150,6 +151,7 @@ public class PanelUpload extends javax.swing.JFrame {
         btnUpload1 = new javax.swing.JButton();
         btnEdit1 = new javax.swing.JButton();
         btnGenerate1 = new javax.swing.JButton();
+        btnInfo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1200, 700));
@@ -323,6 +325,15 @@ public class PanelUpload extends javax.swing.JFrame {
         btnGenerate1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/icons8_Document_50px_1.png"))); // NOI18N
         btnGenerate1.setPreferredSize(new java.awt.Dimension(60, 60));
 
+        btnInfo.setBackground(new java.awt.Color(50, 50, 50));
+        btnInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/icons8_info_50px.png"))); // NOI18N
+        btnInfo.setPreferredSize(new java.awt.Dimension(60, 60));
+        btnInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInfoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -330,6 +341,7 @@ public class PanelUpload extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGenerate1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEdit1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -353,7 +365,9 @@ public class PanelUpload extends javax.swing.JFrame {
                 .addComponent(btnGenerate1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlNavBarLayout = new javax.swing.GroupLayout(pnlNavBar);
@@ -391,7 +405,7 @@ public class PanelUpload extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(pnlNavBar, javax.swing.GroupLayout.DEFAULT_SIZE, 726, Short.MAX_VALUE))
+                .addComponent(pnlNavBar, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE))
             .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -402,7 +416,7 @@ public class PanelUpload extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         this.dispose();
-        
+
         pnlHome = new PanelHome(new LocationModel(getLocation(), getSize()));
         pnlHome.setVisible(true);
 
@@ -436,6 +450,14 @@ public class PanelUpload extends javax.swing.JFrame {
         upload();
 
     }//GEN-LAST:event_btnUploadActionPerformed
+
+    private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+
+        pnlInfo = new PanelInfo(new LocationModel(getLocation(), getSize()));
+        pnlInfo.setVisible(true);
+    }//GEN-LAST:event_btnInfoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -479,6 +501,7 @@ public class PanelUpload extends javax.swing.JFrame {
     private javax.swing.JButton btnFileChooser;
     private javax.swing.JButton btnGenerate1;
     private javax.swing.JButton btnHome;
+    private javax.swing.JButton btnInfo;
     private javax.swing.JButton btnUpload;
     private javax.swing.JButton btnUpload1;
     private javax.swing.JLabel jLabel1;

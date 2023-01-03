@@ -34,11 +34,12 @@ public class PanelEditv2 extends javax.swing.JFrame {
     private PanelUpload pnlUpload;
     private PanelEditv2 pnlEditv2;
     private PanelInfo pnlInfo;
+    private PanelGenerateCv pnlGenerateCv;
 
     /**
      * Creates new form PanelEditv2
      */
-    public PanelEditv2(CvOwner currentPerson,LocationModel locationModel) {
+    public PanelEditv2(CvOwner currentPerson, LocationModel locationModel) {
         this.currentPerson = currentPerson;
         initComponents();
         txtName1.setText(currentPerson.getName());
@@ -48,11 +49,11 @@ public class PanelEditv2 extends javax.swing.JFrame {
 
         setSize(1200, 850);
         pnlNavBar.setSize(150, 700);
-         setLocation(locationModel.getLocation());
+        setLocation(locationModel.getLocation());
         setSize(locationModel.getDimension());
         //setLocation(location);
         //Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-       // this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+        // this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 
     }
 
@@ -337,6 +338,11 @@ public class PanelEditv2 extends javax.swing.JFrame {
         btnGenerate1.setBackground(new java.awt.Color(50, 50, 50));
         btnGenerate1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/icons8_Document_50px_1.png"))); // NOI18N
         btnGenerate1.setPreferredSize(new java.awt.Dimension(60, 60));
+        btnGenerate1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerate1ActionPerformed(evt);
+            }
+        });
 
         btnInfo.setBackground(new java.awt.Color(50, 50, 50));
         btnInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/icons8_info_50px.png"))); // NOI18N
@@ -446,7 +452,7 @@ public class PanelEditv2 extends javax.swing.JFrame {
             // TODO add your handling code here:
             save();
         } catch (IOException ex) {
-            java.util.logging.Logger.getLogger(PanelEdit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PanelEditv2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_btnSaveActionPerformed
@@ -481,6 +487,14 @@ public class PanelEditv2 extends javax.swing.JFrame {
         pnlInfo = new PanelInfo(new LocationModel(getLocation(), getSize()));
         pnlInfo.setVisible(true);
     }//GEN-LAST:event_btnInfoActionPerformed
+
+    private void btnGenerate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerate1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+
+        pnlGenerateCv = new PanelGenerateCv(new LocationModel(getLocation(), getSize()));
+        pnlGenerateCv.setVisible(true);
+    }//GEN-LAST:event_btnGenerate1ActionPerformed
 
     /**
      * @param args the command line arguments

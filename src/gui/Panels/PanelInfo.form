@@ -49,15 +49,37 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="838" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" alignment="1" pref="852" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="810" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTextArea" name="jTextArea1">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="columns" type="int" value="20"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="20" style="0"/>
+                </Property>
+                <Property name="rows" type="int" value="5"/>
+                <Property name="text" type="java.lang.String" value="&#xa;&#xa;&#xa;HOME:&#xa; The first screen encountered when the application is opened is the home screen. There are filtering buttons in the upper pane of the Home screen. &#xa; These fields are separated as NAME, SURNAME, &#xa;&#xa;DEPARTMENT:&#xa; Respectively. It is not a problem to write half the information in the blanks that need to be filled during the filtering process, &#xa; because the filtering part can search accordingly even if the desired part is written incompletely. &#xa; Under the filtering section, the files in the system appear sequentially with name, surname, department, and file name.&#xa;&#xa;DOWNLOAD:&#xa; It is the section that is used to export the CV files created in the application as PDF, that is, to download them to the computer.&#xa;&#xa;&#xa;UPLOAD:&#xa; It is a section used to upload a CV file to the application. In this section, there is an obligation to enter the NAME, SURNAME. &#xa; If the NAME, SURNAME  are not entered, the application will not accept the download and the file will not be uploaded to the application.&#xa; If all operations are done correctly, the user can see the added CV listed.&#xa;&#xa;&#xa;EDIT: If the file wanted to edit is clicked once and then the edit icon is clicked, the user can edit NAME, SURNAME and SKILLS section if desired.&#xa; The user can also change the uploaded file. All the sections are optional.&#xa;&#xa;&#xa;GENERATE: When the icon is clicked in the CV Generate functionality, the user sees 4 fields where the user can fill. &#xa;These fields consist of NAME, SURNAME, DEPARTMENT and SKILLS, respectively. &#xa;The Skills section covers the optional skills, departments, awards, or areas to be added to, &#xa;which the person who wants to Generate CV can optionally fill. When the CV is Generated, the user can see his own CV among the listed CVs.&#xa;&#xa;DELETE:&#xa; A CV file that is desired to be deleted is first clicked on and can be deleted by clicking the delete icon.&#xa;"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+      </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="pnlNavBar">
       <Properties>
@@ -148,7 +170,7 @@
                       <Component id="btnDelete" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnInfo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="38" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

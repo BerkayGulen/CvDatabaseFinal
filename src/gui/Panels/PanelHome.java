@@ -5,6 +5,7 @@
 package gui.Panels;
 
 import dbServices.CvOwnerDaoImpl;
+import gui.Filter;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -35,6 +36,7 @@ public class PanelHome extends javax.swing.JFrame {
     private PanelEditv2 pnlEditv2;
     private PanelInfo pnlInfo;
     private PanelGenerateCv pnlGenerateCv;
+    private Filter filter = new Filter();
 
     /**
      * Creates new form PanelHome
@@ -48,7 +50,7 @@ public class PanelHome extends javax.swing.JFrame {
 
         jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        showData();
+        showData(localCvOwners);
 
     }
 
@@ -61,19 +63,88 @@ public class PanelHome extends javax.swing.JFrame {
 
         jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        showData();
+        showData(localCvOwners);
     }
 
-    public void showData() {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        Object[] row = new Object[4];
-        for (CvOwner data : localCvOwners) {
-            row[0] = data.getName();
-            row[1] = data.getSurname();
-            row[2] = data.getDepartment();
-            String newPath = data.getCvFilePath().replace("cvStorage\\", "");
-            row[3] = newPath;
-            model.addRow(row);
+    public void showData(ArrayList<CvOwner> cvOwners) {
+        try {
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+            Object[] row = new Object[4];
+            for (CvOwner data : cvOwners) {
+                row[0] = data.getName();
+                row[1] = data.getSurname();
+                row[2] = data.getDepartment();
+                String newPath = "";
+                if (data.getCvFilePath() != null) {
+                    newPath = data.getCvFilePath().replace("src\\cvStorage\\", "");
+
+                } else {
+
+                }
+                row[3] = newPath;
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    public void searchByName() {
+        String name = txtName.getText();
+        System.out.println(name);
+        ArrayList<CvOwner> searchedCvOwners = new ArrayList<>();
+        if (name != null) {
+            searchedCvOwners = filter.searchByName(name);
+            if (searchedCvOwners != null) {
+                showData(searchedCvOwners);
+            } else {
+                showData(localCvOwners);
+                JOptionPane.showMessageDialog(this, "There is no records to show");
+
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Cells are empty");
+
+        }
+    }
+
+    public void searchByDepartment() {
+        String department = txtDepartment.getText();
+        System.out.println(department);
+        ArrayList<CvOwner> searchedCvOwners = new ArrayList<>();
+        if (department != null) {
+            searchedCvOwners = filter.searchByDepartment(department);
+            if (searchedCvOwners != null) {
+                showData(searchedCvOwners);
+            } else {
+                showData(localCvOwners);
+                JOptionPane.showMessageDialog(this, "There is no records to show");
+
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Cells are empty");
+
+        }
+    }
+
+    public void searchBySurname() {
+        String surname = txtSurname1.getText();
+        System.out.println(surname);
+        ArrayList<CvOwner> searchedCvOwners = new ArrayList<>();
+        if (surname != null) {
+            searchedCvOwners = filter.searchBySurname(surname);
+            if (searchedCvOwners != null) {
+                showData(searchedCvOwners);
+            } else {
+                showData(localCvOwners);
+                JOptionPane.showMessageDialog(this, "There is no records to show");
+
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Cells are empty");
+
         }
     }
 
@@ -83,12 +154,19 @@ public class PanelHome extends javax.swing.JFrame {
             if (jTable1.getSelectedRow() == -1) {
                 JOptionPane.showMessageDialog(this, "Choose Cell To Delete");
             } else {
-                CvOwner deletedData = localCvOwners.get(jTable1.getSelectedRow());
-                model.removeRow(jTable1.getSelectedRow());
-                dbHelper.delete(deletedData);
+                int dialogButton = JOptionPane.YES_NO_OPTION;
+                int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure?", "Warning", dialogButton);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    CvOwner deletedData = localCvOwners.get(jTable1.getSelectedRow());
+                    model.removeRow(jTable1.getSelectedRow());
+                    dbHelper.delete(deletedData);
+                    JOptionPane.showMessageDialog(this, "Person Successfully Deleted");
+
+                }
+
             }
         } catch (Exception e) {
-
+                System.out.println(e.getMessage());
         }
 
     }
@@ -159,6 +237,7 @@ public class PanelHome extends javax.swing.JFrame {
         txtSurname1 = new javax.swing.JTextField();
         btnSearchSurname1 = new javax.swing.JButton();
         btnOpen = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         pnlNavBar = new javax.swing.JPanel();
@@ -178,6 +257,11 @@ public class PanelHome extends javax.swing.JFrame {
 
         txtDepartment.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         txtDepartment.setPreferredSize(new java.awt.Dimension(80, 50));
+        txtDepartment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDepartmentActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel2.setText("Department:");
@@ -223,6 +307,11 @@ public class PanelHome extends javax.swing.JFrame {
 
         txtSurname1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         txtSurname1.setPreferredSize(new java.awt.Dimension(80, 50));
+        txtSurname1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSurname1ActionPerformed(evt);
+            }
+        });
 
         btnSearchSurname1.setBackground(new java.awt.Color(50, 50, 50));
         btnSearchSurname1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/icons8_Search_30px.png"))); // NOI18N
@@ -243,15 +332,22 @@ public class PanelHome extends javax.swing.JFrame {
             }
         });
 
+        btnReset.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnReset.setText("Reset Filter");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlSearchLayout = new javax.swing.GroupLayout(pnlSearch);
         pnlSearch.setLayout(pnlSearchLayout);
         pnlSearchLayout.setHorizontalGroup(
             pnlSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSearchLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(pnlSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnOpen, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlSearchLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
                         .addGroup(pnlSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlSearchLayout.createSequentialGroup()
                                 .addGap(70, 70, 70)
@@ -277,7 +373,12 @@ public class PanelHome extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(pnlSearchLayout.createSequentialGroup()
                                 .addGap(130, 130, 130)
-                                .addComponent(txtDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(pnlSearchLayout.createSequentialGroup()
+                        .addGap(610, 610, 610)
+                        .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnOpen, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(61, 61, 61))
         );
         pnlSearchLayout.setVerticalGroup(
@@ -295,7 +396,9 @@ public class PanelHome extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(btnOpen, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnOpen, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -500,18 +603,23 @@ public class PanelHome extends javax.swing.JFrame {
 
     private void btnSearchDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchDepartmentActionPerformed
         // TODO add your handling code here:
+        searchByDepartment();
     }//GEN-LAST:event_btnSearchDepartmentActionPerformed
 
     private void btnSearchName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchName1ActionPerformed
         // TODO add your handling code here:
+        searchByName();
     }//GEN-LAST:event_btnSearchName1ActionPerformed
 
     private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
         // TODO add your handling code here:
+        searchByName();
+
     }//GEN-LAST:event_txtNameActionPerformed
 
     private void btnSearchSurname1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchSurname1ActionPerformed
         // TODO add your handling code here:
+        searchBySurname();
     }//GEN-LAST:event_btnSearchSurname1ActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -587,11 +695,26 @@ public class PanelHome extends javax.swing.JFrame {
 
     private void btnGenerate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerate1ActionPerformed
         // TODO add your handling code here:
-          this.dispose();
+        this.dispose();
 
         pnlGenerateCv = new PanelGenerateCv(new LocationModel(getLocation(), getSize()));
         pnlGenerateCv.setVisible(true);
     }//GEN-LAST:event_btnGenerate1ActionPerformed
+
+    private void txtDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDepartmentActionPerformed
+        // TODO add your handling code here:
+        searchByDepartment();
+    }//GEN-LAST:event_txtDepartmentActionPerformed
+
+    private void txtSurname1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSurname1ActionPerformed
+        // TODO add your handling code here:
+        searchBySurname();
+    }//GEN-LAST:event_txtSurname1ActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        // TODO add your handling code here:
+        showData(localCvOwners);
+    }//GEN-LAST:event_btnResetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -636,6 +759,7 @@ public class PanelHome extends javax.swing.JFrame {
     private javax.swing.JButton btnHome;
     private javax.swing.JButton btnInfo;
     private javax.swing.JButton btnOpen;
+    private javax.swing.JButton btnReset;
     private javax.swing.JButton btnSearchDepartment;
     private javax.swing.JButton btnSearchName1;
     private javax.swing.JButton btnSearchSurname1;

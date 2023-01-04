@@ -3,7 +3,7 @@
 The Resume Management System is a desktop application running on Windows that can easily add, delete, edit, upload or view CVs. This application is mainly 
 for department heads at our school but anyone who wants to collect CVs from various people such as students or academicians can also use this application.
 The GUI of application:
-![image](https://user-images.githubusercontent.com/66955622/210608772-ecd7efb1-3124-4364-90b9-2830f734d1c9.png)
+![image](https://user-images.githubusercontent.com/66955622/210622503-746270aa-1002-4dbc-8174-94c0bbdffa71.png)
 
 ## Features
 * Filter the CVs on home screen.

@@ -175,6 +175,7 @@ public class PanelEditv2 extends javax.swing.JFrame {
         jLabel2.setText("Department:");
         jLabel2.setPreferredSize(new java.awt.Dimension(80, 50));
 
+        txtFileChoose.setEditable(false);
         txtFileChoose.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         txtFileChoose.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtFileChoose.setText("no file choosen");

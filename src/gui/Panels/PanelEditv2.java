@@ -86,17 +86,17 @@ public class PanelEditv2 extends javax.swing.JFrame {
         cv = fileChooser.getSelectedFile();
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             if (currentPerson.getCvFilePath() == null) {
-                currentPerson.setCvFilePath("cvStorage\\" + cv.getName());
-                cvOwner.setCvFilePath("cvStorage\\" + cv.getName());
-                txtFileChoose.setText("cvStorage\\" + cv.getName());
-                FileUtils.copyToDirectory(cv, new File("cvStorage"));
+                currentPerson.setCvFilePath("src\\cvStorage\\" + cv.getName());
+                cvOwner.setCvFilePath("src\\cvStorage\\" + cv.getName());
+                txtFileChoose.setText("src\\cvStorage\\" + cv.getName());
+                FileUtils.copyToDirectory(cv, new File("src\\cvStorage"));
 
             } else {
                 FileUtils.delete(new File(currentPerson.getCvFilePath()));
-                FileUtils.copyToDirectory(cv, new File("cvStorage"));
-                currentPerson.setCvFilePath("cvStorage\\" + cv.getName());
-                cvOwner.setCvFilePath("cvStorage\\" + cv.getName());
-                txtFileChoose.setText("cvStorage\\" + cv.getName());
+                FileUtils.copyToDirectory(cv, new File("src\\cvStorage"));
+                currentPerson.setCvFilePath("src\\cvStorage\\" + cv.getName());
+                cvOwner.setCvFilePath("src\\cvStorage\\" + cv.getName());
+                txtFileChoose.setText("src\\cvStorage\\" + cv.getName());
             }
 
         }

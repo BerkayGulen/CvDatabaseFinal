@@ -13,7 +13,7 @@ public class DatabaseConnection {
 
         if (conn == null) {
             try {
-                String fileName = "res/cvOwner.db";
+                String fileName = "cvOwner.db";
                 File file = new File(fileName);
                 boolean firstRun = !file.exists();
 

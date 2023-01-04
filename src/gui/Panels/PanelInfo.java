@@ -41,6 +41,8 @@ public class PanelInfo extends javax.swing.JFrame {
     private void initComponents() {
 
         pnlContent = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         pnlNavBar = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -56,15 +58,22 @@ public class PanelInfo extends javax.swing.JFrame {
 
         pnlContent.setVerifyInputWhenFocusTarget(false);
 
+        jTextArea1.setEditable(false);
+        jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        jTextArea1.setRows(5);
+        jTextArea1.setText("\n\n\nHOME:\n The first screen encountered when the application is opened is the home screen. There are filtering buttons in the upper pane of the Home screen. \n These fields are separated as NAME, SURNAME, \n\nDEPARTMENT:\n Respectively. It is not a problem to write half the information in the blanks that need to be filled during the filtering process, \n because the filtering part can search accordingly even if the desired part is written incompletely. \n Under the filtering section, the files in the system appear sequentially with name, surname, department, and file name.\n\nDOWNLOAD:\n It is the section that is used to export the CV files created in the application as PDF, that is, to download them to the computer.\n\n\nUPLOAD:\n It is a section used to upload a CV file to the application. In this section, there is an obligation to enter the NAME, SURNAME. \n If the NAME, SURNAME  are not entered, the application will not accept the download and the file will not be uploaded to the application.\n If all operations are done correctly, the user can see the added CV listed.\n\n\nEDIT: If the file wanted to edit is clicked once and then the edit icon is clicked, the user can edit NAME, SURNAME and SKILLS section if desired.\n The user can also change the uploaded file. All the sections are optional.\n\n\nGENERATE: When the icon is clicked in the CV Generate functionality, the user sees 4 fields where the user can fill. \nThese fields consist of NAME, SURNAME, DEPARTMENT and SKILLS, respectively. \nThe Skills section covers the optional skills, departments, awards, or areas to be added to, \nwhich the person who wants to Generate CV can optionally fill. When the CV is Generated, the user can see his own CV among the listed CVs.\n\nDELETE:\n A CV file that is desired to be deleted is first clicked on and can be deleted by clicking the delete icon.\n");
+        jScrollPane1.setViewportView(jTextArea1);
+
         javax.swing.GroupLayout pnlContentLayout = new javax.swing.GroupLayout(pnlContent);
         pnlContent.setLayout(pnlContentLayout);
         pnlContentLayout.setHorizontalGroup(
             pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 838, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 852, Short.MAX_VALUE)
         );
         pnlContentLayout.setVerticalGroup(
             pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 810, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
 
         pnlNavBar.setBackground(new java.awt.Color(50, 50, 50));
@@ -163,7 +172,7 @@ public class PanelInfo extends javax.swing.JFrame {
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlNavBarLayout = new javax.swing.GroupLayout(pnlNavBar);
@@ -285,6 +294,8 @@ public class PanelInfo extends javax.swing.JFrame {
     private javax.swing.JButton btnUpload1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel pnlContent;
     private javax.swing.JPanel pnlNavBar;
     // End of variables declaration//GEN-END:variables

@@ -29,7 +29,7 @@ public class PanelUpload extends javax.swing.JFrame {
     private CvOwnerDaoImpl dbHelper = new CvOwnerDaoImpl();
     private PanelHome pnlHome;
     private File cv;
-    private CvOwner cvOwner = new CvOwner();
+    private CvOwner cvOwner;
     private PanelInfo pnlInfo;
     private PanelGenerateCv pnlGenerateCv;
 
@@ -75,9 +75,12 @@ public class PanelUpload extends javax.swing.JFrame {
 
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             cv = fileChooser.getSelectedFile();
-            FileUtils.copyToDirectory(cv, new File("cvStorage"));
-            cvOwner.setCvFilePath("cvStorage\\" + cv.getName());
-            txtFileChoose.setText(cvOwner.getCvFilePath());
+
+            txtFileChoose.setText("src\\cvStorage\\" + cv.getName());
+
+//            FileUtils.copyToDirectory(cv, new File("src\\cvStorage"));
+//            cvOwner.setCvFilePath("src\\cvStorage\\" + cv.getName());
+//            txtFileChoose.setText(cvOwner.getCvFilePath());
 //            System.out.println("Save as file: " + x.getPath());
         }
     }
@@ -93,18 +96,25 @@ public class PanelUpload extends javax.swing.JFrame {
         return false;
     }
 
-    public void upload() {
+    public void upload() throws IOException {
         if (isEmpty()) {
             JOptionPane.showMessageDialog(this, "Cells are empty");
 
         } else {
             if (validateInput()) {
-
+                cvOwner = new CvOwner();
                 cvOwner.setName(txtName1.getText());
                 cvOwner.setSurname(txtSurname1.getText());
                 cvOwner.setDepartment(txtDepartment.getText());
+
+                System.out.println(txtFileChoose.getText());
+
+                if (cv != null) {
+                    FileUtils.copyToDirectory(cv, new File("src\\cvStorage"));
+                    cvOwner.setCvFilePath("src\\cvStorage\\" + cv.getName());
+                }
                 dbHelper.add(cvOwner);
-                JOptionPane.showMessageDialog(this, "Person Succesfully Added");
+                JOptionPane.showMessageDialog(this, "Person Successfully Added");
 
             } else {
                 int dialogButton = JOptionPane.YES_NO_OPTION;
@@ -114,7 +124,7 @@ public class PanelUpload extends javax.swing.JFrame {
                     cvOwner.setSurname(txtSurname1.getText());
                     cvOwner.setDepartment(txtDepartment.getText());
                     dbHelper.add(cvOwner);
-                    JOptionPane.showMessageDialog(this, "Person Succesfully Added");
+                    JOptionPane.showMessageDialog(this, "Person Successfully Added");
 
                 }
             }
@@ -451,9 +461,13 @@ public class PanelUpload extends javax.swing.JFrame {
     }//GEN-LAST:event_txtName1ActionPerformed
 
     private void btnUploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUploadActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
 
-        upload();
+            upload();
+        } catch (IOException ex) {
+            Logger.getLogger(PanelUpload.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_btnUploadActionPerformed
 

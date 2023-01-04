@@ -71,7 +71,8 @@ public class PanelHome extends javax.swing.JFrame {
             row[0] = data.getName();
             row[1] = data.getSurname();
             row[2] = data.getDepartment();
-            row[3] = data.getCvFilePath();
+            String newPath = data.getCvFilePath().replace("cvStorage\\", "");
+            row[3] = newPath;
             model.addRow(row);
         }
     }

@@ -123,6 +123,7 @@ public class PanelEditv2 extends javax.swing.JFrame {
             cvOwner.setName(txtName1.getText());
             cvOwner.setSurname(txtSurname1.getText());
             cvOwner.setDepartment(txtDepartment.getText());
+            cvOwner.setCvFilePath(txtFileChoose.getText());
             dbHelper.update(cvOwner);
 
             JOptionPane.showMessageDialog(this, "Person Succesfully Edited");

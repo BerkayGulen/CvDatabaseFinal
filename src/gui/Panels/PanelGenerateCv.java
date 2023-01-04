@@ -38,6 +38,7 @@ public class PanelGenerateCv extends javax.swing.JFrame {
     private String education;
     private String experiences;
     private String skills;
+    private String fileName;
 
     private ArrayList<String> interestsList;
     private ArrayList<String> educationList;
@@ -59,8 +60,7 @@ public class PanelGenerateCv extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public void generateCv() {
-        PDFGenerator generator = new PDFGenerator();
+    public boolean isEmpty() {
         name = txtName.getText();
         surname = txtSurname.getText();
         email = txtEmail.getText();
@@ -69,41 +69,78 @@ public class PanelGenerateCv extends javax.swing.JFrame {
         education = txtEducation.getText();
         experiences = txtExperiences.getText();
         skills = txtSkills.getText();
-        
-        educationList = stringTolist(education);
-        experincesList = stringTolist(experiences);
-        interestsList = stringTolist(interests);
-        skillList = stringTolist(skills);
-        
-        String nameSurname = "";
-        nameSurname += name+" "+surname;
-        
-
-        try {
-            PDDocument document = generator.generatePDF(nameSurname, email, phoneNumber, educationList, experincesList, interestsList,skillList);
-            String path = "";
-
-            String choosertitle = "";
-
-            JFrame parentFrame = new JFrame();
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setCurrentDirectory(new java.io.File("."));
-            fileChooser.setDialogTitle(choosertitle);
-            fileChooser.setDialogTitle("Specify a file to save");
-            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-
-            int userSelection = fileChooser.showSaveDialog(parentFrame);
-
-            fileChooser.setAcceptAllFileFilterUsed(false);
-            if (userSelection == JFileChooser.APPROVE_OPTION) {
-                //path += fileChooser.getCurrentDirectory().toString();
-                path += fileChooser.getSelectedFile().toString();
-                document.save(path);
-
-                JOptionPane.showMessageDialog(this, "File Saved");
+        fileName = txtSkills.getText();
+        String[] arr = {name, surname, email, phoneNumber, interests, education, experiences, skills, fileName};
+        for (String text : arr) {
+            if (text == null) {
+                return true;
+            } else if (text.trim().length() == 0) {
+                return true;
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        }
+        return false;
+
+    }
+
+    public void generateCv() {
+        if (isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Cells are empty");
+
+        } else {
+            PDFGenerator generator = new PDFGenerator();
+            name = txtName.getText();
+            surname = txtSurname.getText();
+            email = txtEmail.getText();
+            phoneNumber = txtPhoneNumber.getText();
+            interests = txtInterests.getText();
+            education = txtEducation.getText();
+            experiences = txtExperiences.getText();
+            skills = txtSkills.getText();
+
+            educationList = stringTolist(education);
+            experincesList = stringTolist(experiences);
+            interestsList = stringTolist(interests);
+            skillList = stringTolist(skills);
+
+            String nameSurname = "";
+            nameSurname += name + " " + surname;
+
+            try {
+                PDDocument document = generator.generatePDF(nameSurname, email, phoneNumber, educationList, experincesList, interestsList, skillList);
+                String path = "";
+
+                String choosertitle = "";
+
+                JFrame parentFrame = new JFrame();
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setCurrentDirectory(new java.io.File("."));
+                fileChooser.setDialogTitle(choosertitle);
+                fileChooser.setDialogTitle("Specify a file to save");
+                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+                int userSelection = fileChooser.showSaveDialog(parentFrame);
+
+                fileChooser.setAcceptAllFileFilterUsed(false);
+                if (userSelection == JFileChooser.APPROVE_OPTION) {
+                    //path += fileChooser.getCurrentDirectory().toString();
+                    fileName = txtFileName.getText();
+                    if (fileName.contains(".pdf")) {
+                        path += fileChooser.getSelectedFile().toString() + "\\" + fileName;
+
+                    } else {
+                        path += fileChooser.getSelectedFile().toString() + "\\" + fileName + ".pdf";
+
+                    }
+                    System.out.println(path);
+                    System.out.println(path);
+                    document.save(new File(path));
+                    document.close();
+
+                    JOptionPane.showMessageDialog(this, "File Saved");
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
 
     }
@@ -133,20 +170,23 @@ public class PanelGenerateCv extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtPhoneNumber = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtEducation = new javax.swing.JTextArea();
         jLabel8 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        txtExperiences = new javax.swing.JTextArea();
         jLabel10 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        txtInterests = new javax.swing.JTextArea();
         btnGenerate = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        txtSkills = new javax.swing.JTextArea();
+        txtEducation = new javax.swing.JTextField();
+        txtExperiences = new javax.swing.JTextField();
+        txtSkills = new javax.swing.JTextField();
+        txtInterests = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        txtFileName = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
         pnlNavBar2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -192,10 +232,6 @@ public class PanelGenerateCv extends javax.swing.JFrame {
         txtPhoneNumber.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         txtPhoneNumber.setPreferredSize(new java.awt.Dimension(170, 50));
 
-        txtEducation.setColumns(20);
-        txtEducation.setRows(5);
-        jScrollPane1.setViewportView(txtEducation);
-
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel8.setText("Phone number:");
         jLabel8.setPreferredSize(new java.awt.Dimension(80, 50));
@@ -207,17 +243,9 @@ public class PanelGenerateCv extends javax.swing.JFrame {
         jLabel9.setText("Education: ");
         jLabel9.setPreferredSize(new java.awt.Dimension(80, 50));
 
-        txtExperiences.setColumns(20);
-        txtExperiences.setRows(5);
-        jScrollPane2.setViewportView(txtExperiences);
-
         jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel10.setText("Experiences:");
         jLabel10.setPreferredSize(new java.awt.Dimension(80, 50));
-
-        txtInterests.setColumns(20);
-        txtInterests.setRows(5);
-        jScrollPane3.setViewportView(txtInterests);
 
         btnGenerate.setBackground(new java.awt.Color(50, 50, 50));
         btnGenerate.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
@@ -233,9 +261,35 @@ public class PanelGenerateCv extends javax.swing.JFrame {
         jLabel11.setText("Skills:");
         jLabel11.setPreferredSize(new java.awt.Dimension(80, 50));
 
-        txtSkills.setColumns(20);
-        txtSkills.setRows(5);
-        jScrollPane4.setViewportView(txtSkills);
+        txtEducation.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        txtEducation.setPreferredSize(new java.awt.Dimension(170, 50));
+
+        txtExperiences.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        txtExperiences.setPreferredSize(new java.awt.Dimension(170, 50));
+
+        txtSkills.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        txtSkills.setPreferredSize(new java.awt.Dimension(170, 50));
+
+        txtInterests.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        txtInterests.setPreferredSize(new java.awt.Dimension(170, 50));
+
+        jLabel12.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel12.setText("Enter pdf file name:");
+        jLabel12.setPreferredSize(new java.awt.Dimension(80, 50));
+
+        txtFileName.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        txtFileName.setPreferredSize(new java.awt.Dimension(170, 50));
+
+        jLabel13.setText("(please write ',' between interests)");
+
+        jLabel14.setText("(please write ',' between Educations)");
+
+        jLabel15.setText("(please write ',' between Skills)");
+
+        jLabel16.setText("(please write ',' between Experiences)");
+
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel17.setText(".pdf");
 
         javax.swing.GroupLayout pnlContentLayout = new javax.swing.GroupLayout(pnlContent);
         pnlContent.setLayout(pnlContentLayout);
@@ -243,96 +297,110 @@ public class PanelGenerateCv extends javax.swing.JFrame {
             pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlContentLayout.createSequentialGroup()
                 .addGap(100, 100, 100)
-                .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlContentLayout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(100, 100, 100)
-                        .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlContentLayout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(70, 70, 70)
-                        .addComponent(txtSurname, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlContentLayout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(100, 100, 100)
+                                .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(pnlContentLayout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(70, 70, 70)
+                                .addComponent(txtSurname, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(315, 315, 315))
                     .addGroup(pnlContentLayout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
-                        .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(314, 314, 314))
                     .addGroup(pnlContentLayout.createSequentialGroup()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(7, 7, 7)
-                        .addComponent(txtPhoneNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlContentLayout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlContentLayout.createSequentialGroup()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlContentLayout.createSequentialGroup()
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnGenerate)
-                    .addGroup(pnlContentLayout.createSequentialGroup()
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlContentLayout.createSequentialGroup()
+                                .addGap(183, 183, 183)
+                                .addComponent(btnGenerate)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlContentLayout.createSequentialGroup()
+                                .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtEducation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtInterests, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtPhoneNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel14))
+                                .addGap(105, 105, 105))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlContentLayout.createSequentialGroup()
+                                .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtSkills, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtExperiences, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlContentLayout.createSequentialGroup()
+                                        .addComponent(txtFileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel17)
+                                        .addGap(0, 151, Short.MAX_VALUE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel16)
+                                    .addComponent(jLabel15))
+                                .addGap(101, 101, 101))))))
         );
         pnlContentLayout.setVerticalGroup(
             pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlContentLayout.createSequentialGroup()
-                .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlContentLayout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(pnlContentLayout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlContentLayout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(32, 32, 32)
-                .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSurname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50)
                 .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtSurname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
-                .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(18, 18, 18)
+                .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
+                .addGap(18, 18, 18)
+                .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtInterests, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13))
+                .addGap(18, 18, 18)
+                .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEducation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14))
+                .addGap(18, 18, 18)
+                .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtExperiences, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16))
+                .addGap(18, 18, 18)
+                .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSkills, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15))
+                .addGap(18, 18, 18)
                 .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlContentLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlContentLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlContentLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlContentLayout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlContentLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnGenerate, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8))))
+                    .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtFileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, 18)
+                .addComponent(btnGenerate, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlNavBar2.setBackground(new java.awt.Color(50, 50, 50));
@@ -556,6 +624,12 @@ public class PanelGenerateCv extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -567,21 +641,18 @@ public class PanelGenerateCv extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPanel pnlContent;
     private javax.swing.JPanel pnlNavBar;
     private javax.swing.JPanel pnlNavBar1;
     private javax.swing.JPanel pnlNavBar2;
-    private javax.swing.JTextArea txtEducation;
+    private javax.swing.JTextField txtEducation;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextArea txtExperiences;
-    private javax.swing.JTextArea txtInterests;
+    private javax.swing.JTextField txtExperiences;
+    private javax.swing.JTextField txtFileName;
+    private javax.swing.JTextField txtInterests;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPhoneNumber;
-    private javax.swing.JTextArea txtSkills;
+    private javax.swing.JTextField txtSkills;
     private javax.swing.JTextField txtSurname;
     // End of variables declaration//GEN-END:variables
 

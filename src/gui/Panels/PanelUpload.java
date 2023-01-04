@@ -31,6 +31,7 @@ public class PanelUpload extends javax.swing.JFrame {
     private File cv;
     private CvOwner cvOwner = new CvOwner();
     private PanelInfo pnlInfo;
+    private PanelGenerateCv pnlGenerateCv;
 
     /**
      * Creates new form PanelHome
@@ -324,6 +325,11 @@ public class PanelUpload extends javax.swing.JFrame {
         btnGenerate1.setBackground(new java.awt.Color(50, 50, 50));
         btnGenerate1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/icons8_Document_50px_1.png"))); // NOI18N
         btnGenerate1.setPreferredSize(new java.awt.Dimension(60, 60));
+        btnGenerate1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerate1ActionPerformed(evt);
+            }
+        });
 
         btnInfo.setBackground(new java.awt.Color(50, 50, 50));
         btnInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/icons8_info_50px.png"))); // NOI18N
@@ -458,6 +464,14 @@ public class PanelUpload extends javax.swing.JFrame {
         pnlInfo = new PanelInfo(new LocationModel(getLocation(), getSize()));
         pnlInfo.setVisible(true);
     }//GEN-LAST:event_btnInfoActionPerformed
+
+    private void btnGenerate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerate1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+
+        pnlGenerateCv = new PanelGenerateCv(new LocationModel(getLocation(), getSize()));
+        pnlGenerateCv.setVisible(true);
+    }//GEN-LAST:event_btnGenerate1ActionPerformed
 
     /**
      * @param args the command line arguments
